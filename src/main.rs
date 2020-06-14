@@ -3,9 +3,18 @@ use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect(); // get arguments and store
-    let query = &args[1]; // query string to search
-    let filename = &args[2]; // filename to search
-
-    println!("query string is {}",query);
-    println!("filename to search is {}",filename);
+    let config = parse_config(&args);
+    println!("query:{} and filename: {}",config.query,config.filename);
+}
+struct Config {
+    query: String,
+    filename: String,
+}
+fn parse_config(args: &[String]) -> Config{
+    let query= args[1].clone();
+    let filename= args[2].clone();
+    Config {
+        query,
+        filename,
+    }
 }
