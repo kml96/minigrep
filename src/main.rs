@@ -3,18 +3,25 @@ use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect(); // get arguments and store
-    let config = parse_config(&args);
-    println!("query:{} and filename: {}",config.query,config.filename);
+    let config = Config::new(&args); // get instance of config
+    println!("query:{} and filename: {}", config.query, config.filename); //display query and filename
 }
+
+// config
 struct Config {
     query: String,
     filename: String,
 }
-fn parse_config(args: &[String]) -> Config{
-    let query= args[1].clone();
-    let filename= args[2].clone();
-    Config {
-        query,
-        filename,
+
+// config implementation
+impl Config {
+    // return new instance of Config
+    fn new(args: &[String]) -> Config {
+        let query = args[1].clone();
+        let filename = args[2].clone();
+        Config {
+            query,
+            filename,
+        }
     }
 }
