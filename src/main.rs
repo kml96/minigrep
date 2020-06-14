@@ -17,6 +17,9 @@ struct Config {
 impl Config {
     // return new instance of Config
     fn new(args: &[String]) -> Config {
+        if args.len()<3 {
+            panic!("Not enough arguments. Please input  both query and filename");
+        }
         let query = args[1].clone();
         let filename = args[2].clone();
         Config {
