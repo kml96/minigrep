@@ -11,7 +11,10 @@ fn main() {
     });
     //display config
     println!("Searching for query: {}", config.query);
-    println!("In file: {}", config.file);
+    println!("In file: {}", config.filename);
+
+    //run main logic
+    run(config);
 }
 
 // run code to display contents
