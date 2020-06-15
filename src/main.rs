@@ -1,9 +1,14 @@
 //use environment library
 use std::env;
+use std::process;
 
 fn main() {
     let args: Vec<String> = env::args().collect(); // get arguments and store
-    let config = Config::new(&args); // get instance of config
+    let config = Config::new(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {}", err);
+        process::exit(1);
+    });
+
     println!("query:{} and filename: {}", config.query, config.filename); //display query and filename
 }
 
@@ -16,15 +21,12 @@ struct Config {
 // config implementation
 impl Config {
     // return new instance of Config
-    fn new(args: &[String]) -> Config {
-        if args.len()<3 {
-            panic!("Not enough arguments. Please input  both query and filename");
+    fn new(args: &[String]) -> Result<Config, &'static str> {
+        if args.len() < 3 {
+            return Err("not enough arguments");
         }
         let query = args[1].clone();
         let filename = args[2].clone();
-        Config {
-            query,
-            filename,
-        }
+        Ok(Config { query, filename })
     }
 }
