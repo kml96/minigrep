@@ -1,15 +1,26 @@
-//use environment library
-use std::env;
+//import necessary libraries
+use std::{env, fs};
 use std::process;
 
 fn main() {
     let args: Vec<String> = env::args().collect(); // get arguments and store
     let config = Config::new(&args).unwrap_or_else(|err| {
+        // display error msg and exit if error occurs
         println!("Problem parsing arguments: {}", err);
         process::exit(1);
     });
+    //display config
+    println!("Searching for query: {}", config.query);
+    println!("In file: {}", config.file);
+}
 
-    println!("query:{} and filename: {}", config.query, config.filename); //display query and filename
+// run code to display contents
+fn run(config: Config) {
+    //read contents from file
+    let contents = fs::read_to_string(config.filename)
+        .expect("Error reading file!"); // display error
+
+    println!("With text:\n {}", contents); //display contents of file
 }
 
 // config
