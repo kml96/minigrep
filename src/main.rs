@@ -1,6 +1,7 @@
 //import necessary libraries
 use std::{env, fs};
 use std::process;
+use std::error::Error;
 
 fn main() {
     let args: Vec<String> = env::args().collect(); // get arguments and store
@@ -13,17 +14,19 @@ fn main() {
     println!("Searching for query: {}", config.query);
     println!("In file: {}", config.filename);
 
-    //run main logic
-    run(config);
+    //run main logic and handle error
+    if let Err(e) = run(config) {
+        println!("Application error: {}", e);
+        process::exit(1);
+    }
 }
 
 // run code to display contents
-fn run(config: Config) {
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
     //read contents from file
-    let contents = fs::read_to_string(config.filename)
-        .expect("Error reading file!"); // display error
-
+    let contents = fs::read_to_string(config.filename)?;
     println!("With text:\n {}", contents); //display contents of file
+    Ok(())
 }
 
 // config
