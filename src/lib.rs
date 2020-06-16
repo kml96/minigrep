@@ -28,3 +28,25 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     println!("With text:\n {}", contents); //display contents of file
     Ok(())
 }
+
+//tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    //test single result query
+    #[test]
+    fn one_result() {
+        let query = "sec";
+        let contents = "\
+        this is first line \
+        this is second line";
+
+        assert_eq!(vec!["this", "is", "second", "line"], search(query, contents));
+    }
+
+    // return lines containing given query
+    pub fn search<'a>(q: &str, c: &'a str) -> Vec<&'a str> {
+        vec![]
+    }
+}
